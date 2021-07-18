@@ -1,3 +1,2 @@
-# tick
-
-test workfolw
+# 河南师范大学移动学工自动打卡
+将次项目fork到您的仓库中，然后修改Cookie为您的，然后开启Action，每天早上5点打卡
