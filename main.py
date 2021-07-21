@@ -3,7 +3,7 @@ import re
 url1="https://htu.banjimofang.com/student/course/31028/profiles/6099"
 data1={
     'form_id':18461,
-    'formdata[v]':'河南省,新乡市,牧野区,至学路|35.32993,113.91421',
+    'formdata[v]':'河南省,三门峡市,渑池县,仰韶路|34.76399,111.74968',
     'formdata[b]':36,
     'formdata[g]':'',
     'formdata[r]':'',
