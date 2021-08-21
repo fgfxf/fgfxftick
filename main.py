@@ -17,7 +17,7 @@ sleeptime=random.randint(60,3600)  #随机时间   单位秒
 print("休眠"+str(sleeptime/60)+"分钟")
 GPSlocate=["仰韶路","仰韶路渑池县第三小学东50米(仰韶路北)","仰韶路渑池县第三小学东北100米(仰韶路北)","仰韶路渑池县第三小学东100米(仰韶路北)"]
 locate=random.randint(0,len(GPSlocate)-1)
-#time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
+time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
 
 data1={
     'form_id':18461,
