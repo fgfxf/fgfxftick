@@ -5,25 +5,29 @@ import re
 import random
 import time
 
-proxies={'http':'http://127.0.0.1:8080','https':'https://127.0.0.1:8080'}
+proxies={'http':'http://127.0.0.1:8080','https':'https://127.0.0.1:8080'}  # debug查看发包
 
 url1="http://htu.banjimofang.com/student/course/31028/profiles/6099"
 
-x=random.randint(368,401)
-y=random.randint(56,73)
-sleeptime=random.randint(60,3600)
+x=random.randint(368,410) #随机后n位GPS制造飘逸假象
+y=random.randint(56,85)  #随机后n位GPS制造飘逸假象
+temperature=random.randint(1,9) #随机体温  36.1~36.8
+
+sleeptime=random.randint(60,3600)  #随机时间   单位秒
 print("休眠"+str(sleeptime/60)+"分钟")
-time.sleep(sleeptime)
+GPSlocate=["仰韶路","仰韶路渑池县第三小学东50米(仰韶路北)","仰韶路渑池县第三小学东北100米(仰韶路北)","仰韶路渑池县第三小学东100米(仰韶路北)"]
+locate=random.randint(0,len(GPSlocate)-1)
+time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
 
 data1={
     'form_id':18461,
-    'formdata[v]':'河南省,三门峡市,渑池县,仰韶路|34.76'+str(x)+',111.749'+str(y),
+    'formdata[v]':'河南省,三门峡市,渑池县,'+GPSlocate[locate]+'|34.76'+str(x)+',111.749'+str(y),
     'formdata[q]':1,
     'formdata[x]':1,
     'formdata[w]':1,
     'formdata[a]':0,
     'formdata[y]':1,
-    'formdata[b]':36.5,
+    'formdata[b]':'36.'+str(temperature),
     'formdata[c]':1,
     'formdata[d]':1,
     'formdata[e]':1,
