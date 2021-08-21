@@ -1,15 +1,38 @@
+#!/usr/bin/python
+#coding=utf-8
 import requests
 import re
-url1="https://htu.banjimofang.com/student/course/31028/profiles/6099"
+
+
+proxies={'http':'http://127.0.0.1:8080','https':'https://127.0.0.1:8080'}
+
+url1="http://htu.banjimofang.com/student/course/31028/profiles/6099"
+
+
+
 data1={
     'form_id':18461,
     'formdata[v]':'河南省,三门峡市,渑池县,仰韶路|34.76399,111.74968',
+    'formdata[q]':1,
+    'formdata[x]':1,
     'formdata[w]':1,
-    'formdata[b]':36,
+    'formdata[a]':0,
+    'formdata[y]':1,
+    'formdata[b]':36.5,
+    'formdata[c]':1,
+    'formdata[d]':1,
+    'formdata[e]':1,
+    'formdata[f]':1,
     'formdata[g]':'',
-    'formdata[r]':'',
-    'formdata[s]':'',
-    'formdata[t]':'',
+    'formdata[h]':1,
+    'formdata[i]':1,
+    'formdata[j]':1,
+    'formdata[k]':1,
+    'formdata[l]':1,
+    'formdata[m]':0,
+    'formdata[r]':'15238981687',
+    'formdata[s]':'马小林',
+    'formdata[t]':'15838942258',
     'formdata[u]':'',
     '_bjmf_fields_s':"{\"gps\":[\"v\"]}"
 }
@@ -29,11 +52,11 @@ headers1={
     'Referer': 'https://htu.banjimofang.com/student/course/31028/profiles/6099',
     'Accept-Encoding': 'gzip, deflate',
     'Accept-Language': 'zh-CN,zh;q=0.9,en-CN;q=0.8,en-US;q=0.7,en;q=0.6',
-    'Cookie':'remember_student_59ba36addc2b2f9401580f014c7f58ea4e30989d=970776%7CglFkBf2nDmDNiicluZpIsSUu6PL3Ipm8uABiXErJ075NyBViv7h6aLzI9zrn%7C; wxid=oIalJ5trVbPsjFZXf3Cm8IDpOnPU$1628859127$0509ee11712997a2c85e03a1afb78b30; yxktmf=mEAGyKlJjm9kLsU5b3x2u1rHBw8hoNOHlrYo4krR',
+    'Cookie':'remember_student_59ba36addc2b2f9401580f014c7f58ea4e30989d=970776%7CglFkBf2nDmDNiicluZpIsSUu6PL3Ipm8uABiXErJ075NyBViv7h6aLzI9zrn%7C; wxid=oIalJ5trVbPsjFZXf3Cm8IDpOnPU$1628859127$0509ee11712997a2c85e03a1afb78b30; yxktmf=6Ra43JQVWjWhWJe4jPj2STcifASyfLFzSJhonojP',
     'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SPN-AL00 Build/HUAWEISPN-AL00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045709 Mobile Safari/537.36 MMWEBID/7142 MicroMessenger/8.0.7.1920(0x28000737) Process/tools WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64',
 }
 
-resp=requests.post(url=url1,data=data1,headers=headers1).text
+resp=requests.post(url=url1,verify=False,data=data1,headers=headers1,proxies=proxies).text
 print(resp)
 ex='<div class="desc">(.*?)</div>'
 result=re.findall(ex,resp,re.S)
