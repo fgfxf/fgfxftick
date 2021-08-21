@@ -23,6 +23,7 @@ data1={
     'form_id':18461,
     'formdata[v]':'河南省,三门峡市,渑池县,'+GPSlocate[locate]+'|34.76'+str(x)+',111.749'+str(y),
     'formdata[q]':1,
+    'formdata[z]':0,
     'formdata[x]':1,
     'formdata[w]':1,
     'formdata[a]':0,
