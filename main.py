@@ -3,6 +3,7 @@
 import requests
 import re
 import random
+import time
 
 proxies={'http':'http://127.0.0.1:8080','https':'https://127.0.0.1:8080'}
 
@@ -10,6 +11,9 @@ url1="http://htu.banjimofang.com/student/course/31028/profiles/6099"
 
 x=random.randint(368,401)
 y=random.randint(56,73)
+sleeptime=random.randint(60,3600)
+print("休眠"+str(sleeptime/60)+"分钟")
+time.sleep(sleeptime)
 
 data1={
     'form_id':18461,
