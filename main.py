@@ -2,17 +2,18 @@
 #coding=utf-8
 import requests
 import re
-
+import random
 
 proxies={'http':'http://127.0.0.1:8080','https':'https://127.0.0.1:8080'}
 
 url1="http://htu.banjimofang.com/student/course/31028/profiles/6099"
 
-
+x=random.randint(368,401)
+y=random.randint(56,73)
 
 data1={
     'form_id':18461,
-    'formdata[v]':'河南省,三门峡市,渑池县,仰韶路|34.76399,111.74968',
+    'formdata[v]':'河南省,三门峡市,渑池县,仰韶路|34.76'+str(x)+',111.749'+str(y),
     'formdata[q]':1,
     'formdata[x]':1,
     'formdata[w]':1,
@@ -56,7 +57,7 @@ headers1={
     'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SPN-AL00 Build/HUAWEISPN-AL00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045709 Mobile Safari/537.36 MMWEBID/7142 MicroMessenger/8.0.7.1920(0x28000737) Process/tools WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64',
 }
 
-resp=requests.post(url=url1,verify=False,data=data1,headers=headers1,proxies=proxies).text
+resp=requests.post(url=url1,verify=False,data=data1,headers=headers1).text
 print(resp)
 ex='<div class="desc">(.*?)</div>'
 result=re.findall(ex,resp,re.S)
