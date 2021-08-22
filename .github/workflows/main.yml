@@ -32,8 +32,6 @@ jobs:
       - name: commit changes
         uses: EndBug/add-and-commit@v5
         with:
-          ref: master
-          branch: master
           author_name: GITHUB_GENERATOR
           author_email: 1216700206@qq.com
           message: "AUTO GENERATE README"
