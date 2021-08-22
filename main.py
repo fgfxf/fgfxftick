@@ -4,8 +4,115 @@ import requests
 import re
 import random
 import time
+import hashlib
+#from requests.packages.urllib3.exceptions import InsecureRequestWarning
+#requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
 
 proxies={'http':'http://127.0.0.1:8080','https':'https://127.0.0.1:8080'}  # debug查看发包
+G_cookies="wxid=oIalJ5trVbPsjFZXf3Cm8IDpOnPU$1628859127$0509ee11712997a2c85e03a1afb78b30;  remember_student_59ba36addc2b2f9401580f014c7f58ea4e30989d=970776%7C08VGk8e2eimW5CdMomQPnJsUwFOn2epeyW5hEebhxt4swh5NAZ1hc3fLwA6N%7C"
+oldcookie=G_cookies+"; yxktmf=dxCv1N6QS6JkObnbF7vMLKmD9sEqQ0rqaEa731BC;"
+def die(diestr):
+    print(diestr)
+    exit(0)
+
+def getformwx(firstcookie):
+    url="http://htu.banjimofang.com/student?from=wx"
+    print("模拟微信初次进入获取平台cookie")
+    headers={
+    'GET':'/student?from=wx HTTP/1.1',
+    'Host': 'htu.banjimofang.com',
+    'Connection': 'close',
+    'Upgrade-Insecure-Requests': '1',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'User-Agent':'Mozilla/5.0 (Linux; Android 10; EML-AL00 Build/HUAWEIEML-AL00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045713 Mobile Safari/537.36 MMWEBID/5976 MicroMessenger/8.0.6.1900(0x28000653) Process/tools WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-User':'?1',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+    'X-Requested-With': 'com.tencent.mm',
+    'Sec-Fetch-Site': 'none',
+    'Accept-Encoding': 'gzip, deflate',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en-CN;q=0.8,en-US;q=0.7,en;q=0.6',
+    'Cookie':firstcookie
+    }
+    resp=requests.get(url=url,verify=False,headers=headers,timeout=(3,3),allow_redirects=False)
+    print(resp.status_code)
+    if(resp.status_code==302):
+        print("getformwx成功")
+        return 1
+    else:
+        return 0
+    
+    
+
+
+def get学生中心表单(secondcookie):
+    url="http://htu.banjimofang.com/student/course/31028"
+    headers={
+    'GET':'/student/course/31028 HTTP/1.1',
+    'Host': 'htu.banjimofang.com',
+    'Connection': 'close',
+    'Upgrade-Insecure-Requests': '1',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'User-Agent':'Mozilla/5.0 (Linux; Android 10; EML-AL00 Build/HUAWEIEML-AL00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045713 Mobile Safari/537.36 MMWEBID/5976 MicroMessenger/8.0.6.1900(0x28000653) Process/tools WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-User':'?1',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+    'X-Requested-With': 'com.tencent.mm',
+    'Sec-Fetch-Site': 'none',
+    'Accept-Encoding': 'gzip, deflate',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en-CN;q=0.8,en-US;q=0.7,en;q=0.6',
+    'Cookie':secondcookie
+    }
+    resp=requests.get(url=url,verify=False,headers=headers,timeout=(3,3),allow_redirects=False)
+    print(resp.status_code)
+    if(resp.status_code==200):
+        print("get学生中心表单成功")
+        #print(resp.headers['Set-Cookie'])
+        getcookie=resp.headers['Set-Cookie'].split(';')
+        print("新的cookie为：   "+getcookie[0])
+        return getcookie[0]
+    else:
+        return "error"
+    
+def get打卡表单(thirdcookie):
+    url="http://htu.banjimofang.com/student/course/31028/profiles/6099"
+    headers={
+    'GET':'/student/course/31028/profiles/6099 HTTP/1.1',
+    'Host': 'htu.banjimofang.com',
+    'Connection': 'close',
+    'Upgrade-Insecure-Requests': '1',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'User-Agent':'Mozilla/5.0 (Linux; Android 10; EML-AL00 Build/HUAWEIEML-AL00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045713 Mobile Safari/537.36 MMWEBID/5976 MicroMessenger/8.0.6.1900(0x28000653) Process/tools WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-User':'?1',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
+    'X-Requested-With': 'com.tencent.mm',
+    'Sec-Fetch-Site': 'none',
+    'Accept-Encoding': 'gzip, deflate',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en-CN;q=0.8,en-US;q=0.7,en;q=0.6',
+    'Cookie':thirdcookie
+    }
+    resp=requests.get(url=url,verify=False,headers=headers,timeout=(3,3),allow_redirects=False)
+    if(resp.status_code==200):
+        print("get打卡表单成功")
+        hash1=hashlib.md5(resp.text.encode(encoding='UTF-8')).hexdigest()
+        print("表单哈希： "+hash1)
+        if(hash1=='8220522f4bf0546901082f7ad658e3d1'):
+            print("******************\n*表单没有发生更改*\n******************")
+        else:
+            die("表单内容发生了更改")
+        return 1
+    else:
+        return 0
+    
+getformwx(oldcookie)
+thirdcookie=get学生中心表单(oldcookie)
+thirdcookie+=';'
+newcookie=G_cookies+thirdcookie
+get打卡表单(newcookie)
+
+
 
 url1="http://htu.banjimofang.com/student/course/31028/profiles/6099"
 
@@ -13,10 +120,11 @@ x=random.randint(368,410) #随机后n位GPS制造飘逸假象
 y=random.randint(56,85)  #随机后n位GPS制造飘逸假象
 temperature=random.randint(1,9) #随机体温  36.1~36.8
 
-sleeptime=random.randint(60,3600)  #随机时间   单位秒
-print("休眠"+str(sleeptime/60)+"分钟")
-GPSlocate=["仰韶路","仰韶路渑池县第三小学东50米(仰韶路北)","仰韶路渑池县第三小学东北100米(仰韶路北)","仰韶路渑池县第三小学东100米(仰韶路北)"]
+sleeptime=random.randint(60,1800)  #随机时间   单位秒
+
+GPSlocate=["仰韶路渑池县第三小学东50米(仰韶路北)","仰韶路渑池县第三小学东北100米(仰韶路北)","仰韶路渑池县第三小学东100米(仰韶路北)"]
 locate=random.randint(0,len(GPSlocate)-1)
+print("休眠"+str(sleeptime/60)+"分钟")
 time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
 
 data1={
@@ -62,7 +170,7 @@ headers1={
     'Referer': 'https://htu.banjimofang.com/student/course/31028/profiles/6099',
     'Accept-Encoding': 'gzip, deflate',
     'Accept-Language': 'zh-CN,zh;q=0.9,en-CN;q=0.8,en-US;q=0.7,en;q=0.6',
-    'Cookie':'remember_student_59ba36addc2b2f9401580f014c7f58ea4e30989d=970776%7CglFkBf2nDmDNiicluZpIsSUu6PL3Ipm8uABiXErJ075NyBViv7h6aLzI9zrn%7C; wxid=oIalJ5trVbPsjFZXf3Cm8IDpOnPU$1628859127$0509ee11712997a2c85e03a1afb78b30; yxktmf=6Ra43JQVWjWhWJe4jPj2STcifASyfLFzSJhonojP',
+    'Cookie':newcookie,
     'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SPN-AL00 Build/HUAWEISPN-AL00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045709 Mobile Safari/537.36 MMWEBID/7142 MicroMessenger/8.0.7.1920(0x28000737) Process/tools WeChat/arm64 Weixin NetType/WIFI Language/zh_CN ABI/arm64',
 }
 
