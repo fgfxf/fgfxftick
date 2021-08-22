@@ -49,6 +49,7 @@ def getformwx(firstcookie):
         print("getformwx成功")
         return 1
     else:
+        exit(0)
         return 0
     
     
@@ -82,6 +83,7 @@ def get学生中心表单(secondcookie):
         print("新的cookie为：   "+getcookie[0])
         return getcookie[0]
     else:
+        exit(0)
         return "error"
     
 def get打卡表单(thirdcookie):
@@ -113,8 +115,10 @@ def get打卡表单(thirdcookie):
             print("******************\n*表单没有发生更改*\n******************")
         else:
             print("********************表单内容发生了更改！**********************")
+            exit(0)
         return 1
     else:
+        exit(0)
         return 0
 def getjsticket(cookie):
     print("模拟向服务器获取查询腾讯地图的token")
@@ -140,6 +144,7 @@ def getjsticket(cookie):
         print(resp.text)
         return 1
     else:
+        exit(0)
         return 0
 
     
