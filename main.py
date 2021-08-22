@@ -14,7 +14,9 @@ import hashlib
 f=open("fgfxf.cookie",mode='r')
 getfilecookie=f.read()
 f.close
-print("从文件读取  "+getfilecookie)
+getfilecookie=getfilecookie.split('\n')
+getfilecookie=getfilecookie[0].strip()
+print("从文件读取"+getfilecookie)
 
 proxies={'http':'http://127.0.0.1:8080','https':'https://127.0.0.1:8080'}  # debug查看发包
 G_cookies="wxid=oIalJ5trVbPsjFZXf3Cm8IDpOnPU$1628859127$0509ee11712997a2c85e03a1afb78b30;  remember_student_59ba36addc2b2f9401580f014c7f58ea4e30989d=970776%7C08VGk8e2eimW5CdMomQPnJsUwFOn2epeyW5hEebhxt4swh5NAZ1hc3fLwA6N%7C"
