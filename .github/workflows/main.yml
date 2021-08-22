@@ -5,9 +5,12 @@ name: CI
 # Controls when the workflow will run
 on:
   push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
   schedule:
     # 7:05 everyday in UTC+8, 23:05 everyday in UTC+0
-  - cron: '0 1 * * *'
+  - cron: '0 21 * * *'
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -25,3 +28,15 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: python3 main.py
+        
+      - name: commit changes
+        uses: EndBug/add-and-commit@v5
+        with:
+          ref: master
+          branch: master
+          author_name: GITHUB_GENERATOR
+          author_email: 1216700206@qq.com
+          message: "AUTO GENERATE README"
+          add: "*.cookie"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
