@@ -146,31 +146,54 @@ def getjsticket(cookie):
     else:
         exit(0)
         return 0
-
+    
+    
+def randomGPSlocate(sleeptime):
+    GPSstr="";
+    locate="";
+    GPSlocatehome=["河南省,三门峡市,渑池县,仰韶路渑池县第三小学东北100米(仰韶路北)",
+                   "河南省,三门峡市,渑池县,仰韶路渑池县第三小学东北50米(仰韶路北)",
+                   "河南省,三门峡市,渑池县,仰韶路渑池县第三小学(仰韶路北)",
+                   "河南省,三门峡市,渑池县,文明路渑池县车友汇快捷酒店北(文明路西)",
+                   "河南省,三门峡市,渑池县,仰韶路渑池县第三小学东100米(仰韶路北)",
+                   "河南省,三门峡市,渑池县,仰韶路世纪华庭北(仰韶路北)",
+                   "河南省,三门峡市,渑池县,仰韶路会盟丽景北区(仰韶路北)"]
+    if(sleeptime<(50*60)):
+        #在家
+        GPSstr=GPSlocatehome[0]
+        x=random.randint(390,410) #随机后n位GPS制造飘逸假象
+        y=random.randint(75,85)  #随机后n位GPS制造飘逸假象
+        GPSstr+="|"
+        GPSstr+="34.76"+str(x)+",111.749"+str(y)
+    else:
+        #在外面
+        GPSstr=GPSlocatehome[random.randint(1,len(GPSlocatehome)-1)]
+        x=random.randint(300,410) #随机后n位GPS制造飘逸假象
+        y=random.randint(4870,5419)  #随机后n位GPS制造飘逸假象
+        GPSstr+="|"
+        GPSstr+="34.76"+str(x)+",111.7"+str(y)
+    return GPSstr
     
 def post打卡数据(newcookie):
     url1="http://htu.banjimofang.com/student/course/31028/profiles/6099"
-    x=random.randint(368,410) #随机后n位GPS制造飘逸假象
-    y=random.randint(56,85)  #随机后n位GPS制造飘逸假象
-    temperature=random.randint(1,9) #随机体温  36.1~36.8
-
     sleeptime=random.randint(1200,3600)  #随机时间   单位秒
-
-    GPSlocate=["仰韶路渑池县第三小学东50米(仰韶路北)","仰韶路渑池县第三小学东北100米(仰韶路北)","仰韶路渑池县第三小学东100米(仰韶路北)"]
-    locate=random.randint(0,len(GPSlocate)-1)
     print("休眠"+str(sleeptime/60)+"分钟")
     time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
-
+    GPSstr=randomGPSlocate(sleeptime)
+    randay=random.randint(0,100)
+    if(randay<70):
+        GPSstr="河南省,三门峡市,渑池县,仰韶路渑池县第三小学东北100米(仰韶路北)|34.76400,111.74973"
+    print(GPSstr)
     data1={
         'form_id':18461,
-        'formdata[v]':'河南省,三门峡市,渑池县,'+GPSlocate[locate]+'|34.76'+str(x)+',111.749'+str(y),
+        'formdata[v]':GPSstr,
         'formdata[q]':1,
         'formdata[z]':0,
         'formdata[x]':1,
         'formdata[w]':1,
         'formdata[a]':0,
         'formdata[y]':1,
-        'formdata[b]':'36.'+str(temperature),
+        'formdata[b]':'36.5',
         'formdata[c]':1,
         'formdata[d]':1,
         'formdata[e]':1,
