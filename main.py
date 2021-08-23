@@ -6,10 +6,8 @@ import random
 import time
 import hashlib
 
-
-
-#from requests.packages.urllib3.exceptions import InsecureRequestWarning
-#requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 f=open("fgfxf.cookie",mode='r')
 getfilecookie=f.read()
@@ -24,7 +22,7 @@ G_cookies="wxid=oIalJ5trVbPsjFZXf3Cm8IDpOnPU$1628859127$0509ee11712997a2c85e03a1
 oldcookie=G_cookies+";"+平台cookie+ ";"
 
 def getformwx(firstcookie):
-    url="http://htu.banjimofang.com/student?from=wx"
+    url="https://htu.banjimofang.com/student?from=wx"
     print("模拟微信初次进入获取平台cookie")
     print(firstcookie)
     headers={
@@ -56,7 +54,7 @@ def getformwx(firstcookie):
 
 
 def get学生中心表单(secondcookie):
-    url="http://htu.banjimofang.com/student/course/31028"
+    url="https://htu.banjimofang.com/student/course/31028"
     print("模拟从微信进入个人中心")
     headers={
     'GET':'/student/course/31028 HTTP/1.1',
@@ -87,7 +85,7 @@ def get学生中心表单(secondcookie):
         return "error"
     
 def get打卡表单(thirdcookie):
-    url="http://htu.banjimofang.com/student/course/31028/profiles/6099"
+    url="https://htu.banjimofang.com/student/course/31028/profiles/6099"
     print("模拟获取打卡界面")
     headers={
     'GET':'/student/course/31028/profiles/6099 HTTP/1.1',
@@ -122,7 +120,7 @@ def get打卡表单(thirdcookie):
         return 0
 def getjsticket(cookie):
     print("模拟向服务器获取查询腾讯地图的token")
-    url="http://htu.banjimofang.com/weixin/jsticket?url=https://htu.banjimofang.com/student/course/31028/profiles/6099"
+    url="https://htu.banjimofang.com/weixin/jsticket?url=https://htu.banjimofang.com/student/course/31028/profiles/6099"
     headers={
     'GET':'/weixin/jsticket?url=https://htu.banjimofang.com/student/course/31028/profiles/6099 HTTP/1.1',
     'Host': 'htu.banjimofang.com',
@@ -175,7 +173,7 @@ def randomGPSlocate(sleeptime):
     return GPSstr
     
 def post打卡数据(newcookie):
-    url1="http://htu.banjimofang.com/student/course/31028/profiles/6099"
+    url1="https://htu.banjimofang.com/student/course/31028/profiles/6099"
     sleeptime=random.randint(60*15,1.5*60*60)  #随机时间   单位秒
     print("休眠"+str(sleeptime/60)+"分钟")
     time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
