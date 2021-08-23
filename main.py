@@ -176,7 +176,7 @@ def randomGPSlocate(sleeptime):
     
 def post打卡数据(newcookie):
     url1="http://htu.banjimofang.com/student/course/31028/profiles/6099"
-    sleeptime=random.randint(1200,3600)  #随机时间   单位秒
+    sleeptime=random.randint(60*15,1.5*60*60)  #随机时间   单位秒
     print("休眠"+str(sleeptime/60)+"分钟")
     time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
     GPSstr=randomGPSlocate(sleeptime)
