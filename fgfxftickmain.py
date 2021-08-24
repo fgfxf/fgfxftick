@@ -4,7 +4,7 @@ import pycnProxies as pycn
 import fileutil as fileutil
 import htusign as htusign
 import randomLocate as randomLocate
-
+import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -14,17 +14,18 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 #github
 
 import os
-GetProxiesAPI=os.environ["GetProxiesAPI"]
+GETPROXIESAPI=os.environ["GETPROXIESAPI"]
 USERNAME=os.environ["USERNAME"]
 PASSWORD=os.environ["PASSWORD"]
-YourPhone=os.environ["YourPhone"]
-EmergencyPhone=os.environ["EmergencyPhone"]
-Contacts=os.environ["Contacts"]
-Cookiefile=os.environ["Cookiefile"]
-G_cookies=os.environ["G_cookies"]
+YOURPHONE=os.environ["YOURPHONE"]
+EMERGENCYPHONE=os.environ["EMERGENCYPHONE"]
+CONTACTS=os.environ["CONTACTS"]
+COOKIEFILE=os.environ["COOKIEFILE"]
+G_COOKIES=os.environ["G_COOKIES"]
 LOCATE=os.environ["LOCATE"]
-EmergencyPhone=os.environ["EmergencyPhone"]
-ans=os.environ["ans"]
+ANS=os.environ["ANS"]
+
+
 ##########全局变量##########
 
 HtuCookie=""
@@ -41,10 +42,10 @@ print("休眠"+str(SleepTime/60)+"分钟")
 time.sleep(SleepTime)   #休眠  单位秒   GitHub最多支持运行6小时
 
 
-FileCookie=fileutil.readCookieFromFile(Cookiefile)
+FileCookie=fileutil.readCookieFromFile(COOKIEFILE)
 print("【+】从文件读取cookie："+FileCookie)
 HtuCookie=FileCookie
-OldCookie=G_cookies+";"+HtuCookie+";"
+OldCookie=G_COOKIES+";"+HtuCookie+";"
 
 
 #代理ip处理
@@ -57,7 +58,7 @@ time.sleep(3)
 print("【info】提取前先将ip加入到白名单:",end="")
 print(pycn.AddWhiteList(currentip,token))
 time.sleep(3)
-iplist=pycn.GetProxiesIPlist(GetProxiesAPI) #获取代理ip
+iplist=pycn.GetProxiesIPlist(GETPROXIESAPI) #获取代理ip
 print("【+】获取到代理ip:\n"+iplist)
 proxiesIP=iplist.split("\r\n")
 proxiesIP=proxiesIP[0].split(':')
@@ -81,7 +82,7 @@ time.sleep(0.3)
 responseStuCen=htusign.GetStudentCenter(OldCookie)
 print(responseStuCen)
 if(responseStuCen.status_code==200):
-    print("【+】获取学生中成功！")
+    print("【+】获取学生中心成功！")
     HtuCookie=responseStuCen.headers['Set-Cookie'].split(';')
     HtuCookie=HtuCookie[0]
     print("【*】新的cookie为："+HtuCookie)
@@ -94,11 +95,11 @@ if(FileCookie==HtuCookie):
     print("【info】平台cookie没有发生改变！")
 else:
     print("【***】平台cookie发生改变了,新的cookie为： "+NewCookie)
-    ret=fileutil.writeCookieToFile(Cookiefile,HtuCookie)
+    ret=fileutil.writeCookieToFile(COOKIEFILE,HtuCookie)
     if(ret):
         print("【+】新cookie已经写入文件！")
 
-NewCookie=G_cookies+";"+HtuCookie+";"
+NewCookie=G_COOKIES+";"+HtuCookie+";"
 responseTick=htusign.GetTickIndex(NewCookie)
 print(responseTick)
 if(responseTick.status_code==200):
@@ -119,7 +120,7 @@ else:
 time.sleep(2)
 print(htusign.GetJSticket(NewCookie))
 time.sleep(3)
-GPSstr=randomLocate.randomGPSlocate(SleepTime,LocateList,ans)
+GPSstr=randomLocate.randomGPSlocate(SleepTime,LocateList,ANS)
 print("【+】随机地点为"+GPSstr)
 
 data={
@@ -144,9 +145,9 @@ data={
     'formdata[k]':1,   #k 近期您的家人朋友，是否有发热、咳嗽、乏力、呼吸困难等症状
     'formdata[l]':1,   #L 近14天是否与来自中高风险区其他地市的亲朋好友或有发热、咳嗽、呼吸困难、感冒等症状的亲友接触过
     'formdata[m]':0,   #m 今日心里健康状况# 0：健康 1：偶有情绪波动但能自我调节 2：较差，需要心理协助
-    'formdata[r]':YourPhone,  #r 本人电话
-    'formdata[s]':Contacts,   #s 紧急联系人姓名
-    'formdata[t]':EmergencyPhone,#t 紧急联系人手机号
+    'formdata[r]':YOURPHONE,  #r 本人电话
+    'formdata[s]':CONTACTS,   #s 紧急联系人姓名
+    'formdata[t]':EMERGENCYPHONE,#t 紧急联系人手机号
     'formdata[u]':'',   #u 您需要学校提供跟此次疫情相关的协助说明
     '_bjmf_fields_s':"{\"gps\":[\"v\"]}"
 }
@@ -166,10 +167,4 @@ result=re.findall(ex,response,re.S)
 print(result)
 checkip=pycn.testProxies()
 print(checkip)
-
-
-
-
-
-
 
