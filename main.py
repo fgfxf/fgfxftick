@@ -34,7 +34,7 @@ oldcookie=G_cookies+";"+平台cookie+ ";"
 
 sleeptime=random.randint(60*15,1.5*60*60)  #随机时间   单位秒
 print("休眠"+str(sleeptime/60)+"分钟")
-#time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
+time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
     
 def setProxies():
     urlapi="http://tiqu.pyhttp.taolop.com/getip?count=1&neek=8737&type=1&yys=0&port=2&sb=&mr=1&sep=1&city=411200&time=2"
@@ -260,6 +260,7 @@ def randomGPSlocate(sleeptime):
         y=random.randint(4870,5419)  #随机后n位GPS制造飘逸假象
         GPSstr+="|"
         GPSstr+="34.76"+str(x)+",111.7"+str(y)
+    print(GPSstr)
     return GPSstr
     
     
