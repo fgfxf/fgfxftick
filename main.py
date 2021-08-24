@@ -82,14 +82,14 @@ def loginPcProxies():
     token=token.get('ret_data').get("token")
     return token
 
-def addWhite(IP):
+def addWhite(IP,token):
     url="http://pycn.yapi.3866866.com/user/save_white_ip"
     headers={
     'POST':'/user/save_white_ip HTTP/1.1',
     'Host':'pycn.yapi.3866866.com',
     'Content-Length': '10',
     'Accept': 'text/html, */*; q=0.01',
-    'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHByX3RpbWUiOiIxNjI5NzY4NTc5IiwidWlkIjoiODczNyJ9.dBE-q2fGcWGSYmIampl-3tZzUw4BBNtswfP48B-PK5I',
+    'Authorization':'Bearer '+ token,
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36 Edg/92.0.902.62',
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
     'Origin': 'http://pc.py.cn',
