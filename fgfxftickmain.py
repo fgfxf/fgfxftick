@@ -11,26 +11,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 ##########个人变量##########
 #API设置为txt文本格式，以\r\n结束,格数  IP:PORT\r\nIP:PORT  最好是单行的
-GetProxiesAPI="http://tiqu.pyhttp.taolop.com/getip?count=1&neek=8737&type=1&yys=0&port=2&sb=&mr=1&sep=1&city=411200&time=2"
-USERNAME="15238981687"
-YourPhone="15238981687" #打卡数据：手机号
-PASSWORD="fmf123456"   #代理登录
-EmergencyPhone="15839842258"
-Contacts="马小林"
-Cookiefile="fgfxf.cookie"
-G_cookies="wxid=oIalJ5trVbPsjFZXf3Cm8IDpOnPU$1628859127$0509ee11712997a2c85e03a1afb78b30;  remember_student_59ba36addc2b2f9401580f014c7f58ea4e30989d=970776%7C08VGk8e2eimW5CdMomQPnJsUwFOn2epeyW5hEebhxt4swh5NAZ1hc3fLwA6N%7C"
-
-LOCATE="河南省,三门峡市,渑池县,仰韶路渑池县第三小学东北100米(仰韶路北);\
-            河南省,三门峡市,渑池县,仰韶路渑池县第三小学东北50米(仰韶路北);\
-            河南省,三门峡市,渑池县,仰韶路渑池县第三小学(仰韶路北);\
-            河南省,三门峡市,渑池县,文明路渑池县车友汇快捷酒店北(文明路西);\
-            河南省,三门峡市,渑池县,仰韶路渑池县第三小学东100米(仰韶路北);\
-            河南省,三门峡市,渑池县,仰韶路世纪华庭北(仰韶路北);\
-            河南省,三门峡市,渑池县,仰韶路会盟丽景北区(仰韶路北)"
-ans="34.76"
-
-
-'''#github
+#github
 
 import os
 GetProxiesAPI=os.environ["GetProxiesAPI"]
@@ -44,11 +25,6 @@ G_cookies=os.environ["G_cookies"]
 LOCATE=os.environ["LOCATE"]
 EmergencyPhone=os.environ["EmergencyPhone"]
 ans=os.environ["ans"]
-
-'''
-
-
-
 ##########全局变量##########
 
 HtuCookie=""
