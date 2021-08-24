@@ -36,11 +36,16 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         env:
-          LOCATE: ${{secrets.LOCATE}}
-          NAME: ${{secrets.NAME}}
-          PASSWORD: ${{secrets.PASSWORD}}
-          PHONE: ${{secrets.PHONE}}
+          GETPROXIESAPI: ${{secrets.GETPROXIESAPI}}
           USERNAME: ${{secrets.USERNAME}}
+          YOURPHONE: ${{secrets.YOURPHONE}}
+          PASSWORD: ${{secrets.PASSWORD}}
+          EMERGENCYPHONE: ${{secrets.EMERGENCYPHONE}}
+          CONTACTS: ${{secrets.CONTACTS}}
+          COOKIEFILE: ${{secrets.COOKIEFILE}}
+          G_COOKIES: ${{secrets.G_COOKIES}}
+          LOCATE: ${{secrets.LOCATE}}
+          ANS: ${{secrets.ANS}}
         
         run: python3 fgfxftickmain.py
         
