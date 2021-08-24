@@ -32,7 +32,7 @@ jobs:
           
       - name: install dependencies
         run: python -m pip install --upgrade pip
-            pip install PySocks
+            pip install PySocks requests
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: python3 main.py
