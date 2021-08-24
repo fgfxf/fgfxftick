@@ -42,7 +42,7 @@ jobs:
           PHONE: ${{secrets.PHONE}}
           USERNAME: ${{secrets.USERNAME}}
         
-        run: python3 main.py
+        run: python3 fgfxftickmain.py
         
       - name: commit changes
         uses: EndBug/add-and-commit@v5
