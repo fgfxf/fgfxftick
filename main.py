@@ -240,7 +240,7 @@ def randomGPSlocate(sleeptime):
     locate="";
     GPSlocatehome=[LOCATE+"渑池县第三小学东北100米(仰韶路北)",
                    LOCATE+"渑池县第三小学东北50米(仰韶路北)",
-                   LOCATE+"仰韶路渑池县第三小学(仰韶路北)",
+                   LOCATE+"渑池县第三小学(仰韶路北)",
                    "河南省,三门峡市,渑池县,文明路渑池县车友汇快捷酒店北(文明路西)",
                    LOCATE+"渑池县第三小学东100米(仰韶路北)",
                    LOCATE+"世纪华庭北(仰韶路北)",
