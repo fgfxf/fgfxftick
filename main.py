@@ -5,7 +5,7 @@ import re
 import random
 import time
 import hashlib
-
+#pip3 install PySocks -i https://pypi.tuna.tsinghua.edu.cn/simple
 import socket
 import socks
 
@@ -26,7 +26,7 @@ oldcookie=G_cookies+";"+平台cookie+ ";"
 
 sleeptime=random.randint(60*15,1.5*60*60)  #随机时间   单位秒
 print("休眠"+str(sleeptime/60)+"分钟")
-time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
+#time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
     
 def setProxies():
     urlapi="http://tiqu.pyhttp.taolop.com/getip?count=1&neek=8737&type=1&yys=0&port=2&sb=&mr=1&sep=1&city=411200&time=2"
@@ -42,6 +42,36 @@ def testProxies():
     url="http://ip.tool.lu"
     resp=requests.get(url=url)
     print(resp.text)
+    return resp.text
+
+def addWhite(IP):
+    url="http://pycn.yapi.3866866.com/user/save_white_ip"
+    headers={
+    'POST':'/user/save_white_ip HTTP/1.1',
+    'Host':'pycn.yapi.3866866.com',
+    'Content-Length': '10',
+    'Accept': 'text/html, */*; q=0.01',
+    'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHByX3RpbWUiOiIxNjI5NzY4NTc5IiwidWlkIjoiODczNyJ9.dBE-q2fGcWGSYmIampl-3tZzUw4BBNtswfP48B-PK5I',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36 Edg/92.0.902.62',
+    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    'Origin': 'http://pc.py.cn',
+    'Referer': 'http://pc.py.cn/',
+    'Accept-Encoding': 'gzip, deflate',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+    'Connection': 'close'
+
+    }
+    data={
+     'ip':IP
+    }
+    resp=requests.post(url=url,headers=headers,data=data)
+    print(resp.text)
+
+def delWhile(IP):
+    urlapi="http://pycn.yapi.3866866.com/index/index/del_white?neek=8737&appkey=63892542302d2904498fe7579e173ad1&white="+IP
+    resp=requests.get(url=urlapi,verify=False,timeout=(3,3))
+    print(resp.text)
+
 
 def getformwx(firstcookie):
     url="https://htu.banjimofang.com/student?from=wx"
@@ -257,6 +287,12 @@ def post打卡数据(newcookie):
 
 
 
+checkIP=testProxies()
+ex=r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b"
+result=re.findall(ex,checkIP,re.S)
+print(result[0])
+
+addWhite(result[0])
 setProxies()
 testProxies()
 getformwx(oldcookie)
@@ -280,5 +316,6 @@ time.sleep(3)
 post打卡数据(newcookie)
 
 testProxies()
+
 
 
