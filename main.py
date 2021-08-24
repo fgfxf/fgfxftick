@@ -9,9 +9,16 @@ import hashlib
 import socket
 import socks
 import json
-
+import os
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+LOCATE=os.environ["LOCATE"]
+NAME=os.environ["NAME"]
+PASSWORD=os.environ["PASSWORD"]
+PHONE=os.environ["PHONE"]
+USERNAME=os.environ["USERNAME"]
+
 
 f=open("fgfxf.cookie",mode='r')
 getfilecookie=f.read()
@@ -27,7 +34,7 @@ oldcookie=G_cookies+";"+平台cookie+ ";"
 
 sleeptime=random.randint(60*15,1.5*60*60)  #随机时间   单位秒
 print("休眠"+str(sleeptime/60)+"分钟")
-time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
+#time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
     
 def setProxies():
     urlapi="http://tiqu.pyhttp.taolop.com/getip?count=1&neek=8737&type=1&yys=0&port=2&sb=&mr=1&sep=1&city=411200&time=2"
@@ -46,6 +53,8 @@ def testProxies():
     return resp.text
 
 def loginPcProxies():
+    print(requests.get("http://pc.py.cn/",headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36 Edg/92.0.902.62'}))
+    time.sleep(3)
     url="http://pycn.yapi.3866866.com/login"
     headers={
     'POST':'/login HTTP/1.1',
@@ -63,8 +72,8 @@ def loginPcProxies():
     }
 
     data={
-    'phone':'15238981687',
-    'password':'fmf123456',
+    'phone':USERNAME,
+    'password':PASSWORD,
     'remember':0
     }
     resp=requests.post(url=url,headers=headers,data=data)
@@ -229,13 +238,13 @@ def getjsticket(cookie):
 def randomGPSlocate(sleeptime):
     GPSstr="";
     locate="";
-    GPSlocatehome=["河南省,三门峡市,渑池县,仰韶路渑池县第三小学东北100米(仰韶路北)",
-                   "河南省,三门峡市,渑池县,仰韶路渑池县第三小学东北50米(仰韶路北)",
-                   "河南省,三门峡市,渑池县,仰韶路渑池县第三小学(仰韶路北)",
+    GPSlocatehome=[LOCATE+"渑池县第三小学东北100米(仰韶路北)",
+                   LOCATE+"渑池县第三小学东北50米(仰韶路北)",
+                   LOCATE+"仰韶路渑池县第三小学(仰韶路北)",
                    "河南省,三门峡市,渑池县,文明路渑池县车友汇快捷酒店北(文明路西)",
-                   "河南省,三门峡市,渑池县,仰韶路渑池县第三小学东100米(仰韶路北)",
-                   "河南省,三门峡市,渑池县,仰韶路世纪华庭北(仰韶路北)",
-                   "河南省,三门峡市,渑池县,仰韶路会盟丽景北区(仰韶路北)"]
+                   LOCATE+"渑池县第三小学东100米(仰韶路北)",
+                   LOCATE+"世纪华庭北(仰韶路北)",
+                   LOCATE+"会盟丽景北区(仰韶路北)"]
     randay=random.randint(0,100)
     if(sleeptime<(50*60) or randay<60 ):
         #在家
@@ -282,9 +291,9 @@ def post打卡数据(newcookie):
         'formdata[k]':1,
         'formdata[l]':1,
         'formdata[m]':0,
-        'formdata[r]':'15238981687',
-        'formdata[s]':'马小林',
-        'formdata[t]':'15838942258',
+        'formdata[r]':USERNAME,
+        'formdata[s]':NAME,
+        'formdata[t]':PHONE,
         'formdata[u]':'',
         '_bjmf_fields_s':"{\"gps\":[\"v\"]}"
     }
