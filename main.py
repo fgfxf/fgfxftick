@@ -279,5 +279,6 @@ getjsticket(newcookie)
 time.sleep(3)
 post打卡数据(newcookie)
 
+testProxies()
 
 
