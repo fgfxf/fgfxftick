@@ -6,6 +6,9 @@ import random
 import time
 import hashlib
 
+import socket
+import socks
+
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
@@ -20,6 +23,25 @@ proxies={'http':'http://127.0.0.1:8080','https':'https://127.0.0.1:8080'}  # deb
 G_cookies="wxid=oIalJ5trVbPsjFZXf3Cm8IDpOnPU$1628859127$0509ee11712997a2c85e03a1afb78b30;  remember_student_59ba36addc2b2f9401580f014c7f58ea4e30989d=970776%7C08VGk8e2eimW5CdMomQPnJsUwFOn2epeyW5hEebhxt4swh5NAZ1hc3fLwA6N%7C"
 平台cookie=getfilecookie
 oldcookie=G_cookies+";"+平台cookie+ ";"
+
+sleeptime=random.randint(60*15,1.5*60*60)  #随机时间   单位秒
+print("休眠"+str(sleeptime/60)+"分钟")
+time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
+    
+def setProxies():
+    urlapi="http://tiqu.pyhttp.taolop.com/getip?count=1&neek=8737&type=1&yys=0&port=2&sb=&mr=1&sep=1&city=411200&time=2"
+    proIp=requests.get(url=urlapi).text
+    proIp=proIp.split(':')
+    Ip=proIp[0]
+    Port=proIp[1]
+    socks.set_default_proxy(socks.SOCKS5, Ip, int(Port))
+    socket.socket = socks.socksocket
+    return 1
+
+def testProxies():
+    url="http://ip.tool.lu"
+    resp=requests.get(url=url)
+    print(resp.text)
 
 def getformwx(firstcookie):
     url="https://htu.banjimofang.com/student?from=wx"
@@ -144,8 +166,7 @@ def getjsticket(cookie):
     else:
         exit(0)
         return 0
-    
-    
+
 def randomGPSlocate(sleeptime):
     GPSstr="";
     locate="";
@@ -156,7 +177,8 @@ def randomGPSlocate(sleeptime):
                    "河南省,三门峡市,渑池县,仰韶路渑池县第三小学东100米(仰韶路北)",
                    "河南省,三门峡市,渑池县,仰韶路世纪华庭北(仰韶路北)",
                    "河南省,三门峡市,渑池县,仰韶路会盟丽景北区(仰韶路北)"]
-    if(sleeptime<(50*60)):
+    randay=random.randint(0,100)
+    if(sleeptime<(50*60) or randay<60 ):
         #在家
         GPSstr=GPSlocatehome[0]
         x=random.randint(390,410) #随机后n位GPS制造飘逸假象
@@ -172,16 +194,14 @@ def randomGPSlocate(sleeptime):
         GPSstr+="34.76"+str(x)+",111.7"+str(y)
     return GPSstr
     
+    
 def post打卡数据(newcookie):
     url1="https://htu.banjimofang.com/student/course/31028/profiles/6099"
-    sleeptime=random.randint(60*15,1.5*60*60)  #随机时间   单位秒
-    print("休眠"+str(sleeptime/60)+"分钟")
-    time.sleep(sleeptime)   #休眠  单位秒   GitHub最多支持运行6小时
+
+    #temperature=random.randint(1,9) #随机体温  36.1~36.8
     GPSstr=randomGPSlocate(sleeptime)
-    randay=random.randint(0,100)
-    if(randay<70):
-        GPSstr="河南省,三门峡市,渑池县,仰韶路渑池县第三小学东北100米(仰韶路北)|34.76400,111.74973"
-    print(GPSstr)
+   
+
     data1={
         'form_id':18461,
         'formdata[v]':GPSstr,
@@ -235,8 +255,12 @@ def post打卡数据(newcookie):
     result=re.findall(ex,resp,re.S)
     print(result)
 
+
+
+setProxies()
+testProxies()
 getformwx(oldcookie)
-time.sleep(1)
+time.sleep(0.5)
 thirdcookie=get学生中心表单(oldcookie)
 if(平台cookie==thirdcookie):
     print("平台cookie没有发生改变")
@@ -245,7 +269,6 @@ else:
     f=open("fgfxf.cookie",mode='w')
     f.write(thirdcookie)
     f.close()
-    time.sleep(3)
     print("新cookie已经写入文件")
  
 thirdcookie+=';'
@@ -255,3 +278,6 @@ time.sleep(3)
 getjsticket(newcookie)
 time.sleep(3)
 post打卡数据(newcookie)
+
+
+
