@@ -160,11 +160,14 @@ data={
 #p   =  1
 
 response=htusign.PostTickData(data,NewCookie)
-print(response)
+#print(response)
 import re
 ex='<div class="desc">(.*?)</div>'
 result=re.findall(ex,response,re.S)
 print(result)
+ex2='layui.layer.alert\(\'(.*?)\'\);'
+result2=re.findall(ex2,response,re.S)
+print(result2)
 checkip=pycn.testProxies()
 print(checkip)
 
