@@ -32,14 +32,17 @@ HtuCookie=""
 NewCookie=""
 LocateList=LOCATE.split(';')
 ##########main函数##########
-
+def exit(code):
+    raise
+    
 #随机休眠
 import random
 import time
 
 SleepTime=random.randint(60*15,1.5*60*60)  #随机时间   单位秒
 print("休眠"+str(SleepTime/60)+"分钟")
-time.sleep(SleepTime)   #休眠  单位秒   GitHub最多支持运行6小时
+
+#time.sleep(SleepTime)   #休眠  单位秒   GitHub最多支持运行6小时
 
 
 FileCookie=fileutil.readCookieFromFile(COOKIEFILE)
@@ -58,16 +61,31 @@ time.sleep(3)
 print("【info】提取前先将ip加入到白名单:",end="")
 print(pycn.AddWhiteList(currentip,token))
 time.sleep(3)
-iplist=pycn.GetProxiesIPlist(GETPROXIESAPI) #获取代理ip
-print("【+】获取到代理ip:\n"+iplist)
-proxiesIP=iplist.split("\r\n")
-proxiesIP=proxiesIP[0].split(':')
-proxiesPort=proxiesIP[1]
-proxiesIP=proxiesIP[0]
+circle=0
+while(1):
+    iplist=pycn.GetProxiesIPlist(GETPROXIESAPI) #获取代理ip
+    print("【+】获取到代理ip:\n"+iplist)
+    proxiesIP=iplist.split("\r\n")
+    proxiesIP=proxiesIP[0].split(':')
+    proxiesPort=proxiesIP[1]
+    proxiesIP=proxiesIP[0]
 
-pycn.setSocketProxies(proxiesIP,int(proxiesPort))
-checkfakeip=pycn.testProxies()#测试当前ip  和归属地
-print(checkfakeip)
+    _socket=pycn.setSocketProxies(proxiesIP,int(proxiesPort))
+    try:
+        checkfakeip=pycn.testProxies()#测试当前ip  和归属地
+        print(checkfakeip)
+        break
+    except:
+        pycn.RecoverSocket(_socket)
+        print("【!】检测到代理ip失效！进入了循环！")
+        time.sleep(3)
+        circle=circle+1
+        if(circle<5):
+            continue
+        else:
+            raise 
+
+
 #!代理ip处理结束
 
 #HTU正式处理
