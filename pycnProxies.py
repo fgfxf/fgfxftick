@@ -27,9 +27,14 @@ def Str2IP(ipstr):
     return ret[0]
 
 def setSocketProxies(ip,port):
+    _socket=socket.socket #保存原始无代理状态
     socks.set_default_proxy(socks.SOCKS5, ip,port)
-    socket.socket = socks.socksocket
-    return "设置"+ip+":"+str(port)+"为socket代理"
+    socket.socket = socks.socksocket  
+    print("设置"+ip+":"+str(port)+"为socket代理")
+    return _socket
+
+def RecoverSocket(_socket):
+    socket.socket =_socket
 
 def loginPYCNProxies(USERNAME,PASSWORD):
     IndexUrl="http://pc.py.cn/"
