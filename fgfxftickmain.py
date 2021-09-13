@@ -42,7 +42,7 @@ import time
 SleepTime=random.randint(60*15,1.5*60*60)  #随机时间   单位秒
 print("休眠"+str(SleepTime/60)+"分钟")
 
-#time.sleep(SleepTime)   #休眠  单位秒   GitHub最多支持运行6小时
+time.sleep(SleepTime)   #休眠  单位秒   GitHub最多支持运行6小时
 
 
 FileCookie=fileutil.readCookieFromFile(COOKIEFILE)
