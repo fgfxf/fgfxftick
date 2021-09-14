@@ -61,30 +61,33 @@ time.sleep(3)
 print("【info】提取前先将ip加入到白名单:",end="")
 print(pycn.AddWhiteList(currentip,token))
 time.sleep(3)
+
+
 circle=0
+iplist=pycn.GetProxiesIPlist(GETPROXIESAPI) #获取代理ip
+IpDict=iplist.split("\r\n")
 while(1):
-    iplist=pycn.GetProxiesIPlist(GETPROXIESAPI) #获取代理ip
-    print("【+】获取到代理ip:\n"+iplist)
-    proxiesIP=iplist.split("\r\n")
-    proxiesIP=proxiesIP[0].split(':')
+    
+    print("【+】获取到代理ip:"+IpDict[circle])
+    if(len(IpDict)-2 <circle):
+        exit(0)
+    proxiesIP=IpDict[circle].split(':')
     proxiesPort=proxiesIP[1]
     proxiesIP=proxiesIP[0]
-
     _socket=pycn.setSocketProxies(proxiesIP,int(proxiesPort))
     try:
         checkfakeip=pycn.testProxies()#测试当前ip  和归属地
-        print(checkfakeip)
         break
     except:
         pycn.RecoverSocket(_socket)
         print("【!】检测到代理ip失效！进入了循环！")
         time.sleep(3)
         circle=circle+1
-        if(circle<5):
+        if(circle<10):
             continue
         else:
             raise 
-
+print(checkfakeip)
 
 #!代理ip处理结束
 
